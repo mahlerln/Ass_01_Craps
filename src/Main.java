@@ -1,15 +1,57 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Random;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
+    String playAgain;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+    do {
+        System.out.print("Do you want to play craps? (y/n): ");
+        playAgain = scanner.next();
+
+        if (playAgain.equalsIgnoreCase("y")) {
+            int die1 = random.nextInt(6) + 1;
+            int die2 = random.nextInt(6) + 1;
+            int sum = die1 + die2;
+
+            System.out.println("Die 1: " + die1);
+            System.out.println("Die 2: " + die2);
+            System.out.println("Sum: " + sum);
+
+            if (sum == 2 || sum == 3 || sum == 12) {
+                System.out.println("Craps! You lose.");
+            } else if (sum == 7 || sum == 11) {
+                System.out.println("Natural! You win!");
+            } else {
+                int point = sum;
+                System.out.println("Point is now " + point);
+
+                boolean playing = true;
+                while (playing) {
+                    die1 = random.nextInt(6) + 1;
+                    die2 = random.nextInt(6) + 1;
+                    sum = die1 + die2;
+
+                    System.out.println("Die 1: " + die1);
+                    System.out.println("Die 2: " + die2);
+                    System.out.println("Sum: " + sum);
+
+                    if (sum == 7) {
+                        System.out.println("Got a seven and lost.");
+                        playing = false;
+                    } else if (sum == point) {
+                        System.out.println("Made point and won!");
+                        playing = false;
+                    } else {
+                        System.out.println("Trying for point");
+                    }
+                }
+            }
         }
+    } while (playAgain.equalsIgnoreCase("y"));
+
+    scanner.close();
     }
 }
